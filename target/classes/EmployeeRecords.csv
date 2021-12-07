@@ -1222,7 +1222,7 @@ Emp ID,Name Prefix,First Name,Middle Initial,Last Name,Gender,E Mail,Date of Bir
 977624,Mrs.,Antonio,J,Alberto,F,antonio.alberto@gmail.com,8/22/1992,12/28/2014,105057
 698835,Hon.,Ellis,J,Stripling,F,ellis.stripling@microsoft.com,6/30/1968,2/24/2013,161037
 512796,Ms.,Dean,U,Daily,F,dean.daily@cox.net,1/21/1977,7/10/2001,199064
-749246,Mr.,Corey,G,com.database.EmployeeList,M,corey.list@gmail.com,10/15/1962,12/24/1999,137084
+749246,Mr.,Corey,G,List,M,corey.list@gmail.com,10/15/1962,12/24/1999,137084
 504900,Prof.,German,E,Libby,M,german.libby@gmail.com,3/10/1967,7/5/1994,76724
 454030,Mr.,Abram,H,Graber,M,abram.graber@hotmail.com,9/10/1974,12/21/2007,146699
 236145,Mr.,Solomon,C,Sato,M,solomon.sato@comcast.net,7/18/1967,1/26/2008,100087
@@ -2030,7 +2030,7 @@ Emp ID,Name Prefix,First Name,Middle Initial,Last Name,Gender,E Mail,Date of Bir
 693789,Ms.,Johna,O,Tamayo,F,johna.tamayo@verizon.net,2/19/1989,8/3/2012,107170
 799039,Dr.,Marion,W,Rook,M,marion.rook@gmail.com,6/11/1964,8/12/2004,99464
 243870,Mr.,Doyle,Q,Oates,M,doyle.oates@gmail.com,1/16/1993,4/28/2017,149485
-127638,Ms.,Tory,I,com.database.EmployeeList,F,tory.list@gmail.com,1/23/1994,5/2/2017,108710
+127638,Ms.,Tory,I,List,F,tory.list@gmail.com,1/23/1994,5/2/2017,108710
 877105,Ms.,Norah,U,Leger,F,norah.leger@gmail.com,11/30/1975,9/29/1997,133175
 704169,Mr.,Lucio,J,Lock,M,lucio.lock@gmail.com,12/14/1975,4/19/2016,143364
 274356,Hon.,Brittni,P,Bloch,F,brittni.bloch@hotmail.com,1/16/1985,10/27/2012,172043
