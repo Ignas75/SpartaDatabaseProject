@@ -25,7 +25,7 @@ public class ReaderTest
 //        try
 //        {
 //            Reader reader = new Reader();
-//            com.database.List<Employee> list = new ArrayList<>();
+//            List<Employee> list = new ArrayList<>();
 //            reader.readCSV(file, list);
 //            fail("exception not thrown");
 //        }
