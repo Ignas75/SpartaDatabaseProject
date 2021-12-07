@@ -5,9 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +16,7 @@ public class EmployeeTest {
     Employee employee1;
     Employee employee2;
     Employee employee3;
+    Employee badEmployee;
     ArrayList<Employee> employees;
 
     @BeforeEach
@@ -57,13 +55,95 @@ public class EmployeeTest {
         assertEquals(correctString, testString);
     }
 
-    /*
-    @ParameterizedTest
-    @CsvSource()
-    @DisplayName("methodName")
-    public void methodName() {
-        assertEquals();
+    // ----------------------------------------------------------------------------------------------- //
+    //                                          isValid() Tests                                        //
+    // ----------------------------------------------------------------------------------------------- //
+
+    @Test
+    @DisplayName("invalidNumberOfEntries")
+    public void invalidNumberOfEntries()
+    {
+        badEmployee = new Employee("");
+        assertEquals(false, badEmployee.isValid());
     }
 
-     */
+    @Test
+    @DisplayName("invalidID")
+    public void invalidID()
+    {
+        badEmployee = new Employee("BAD55,Mr.,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidTitle")
+    public void invalidTitle()
+    {
+        badEmployee = new Employee("647173,BAD,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidFirstName")
+    public void validFirstName()
+    {
+        badEmployee = new Employee("647173,Mr.,1,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidMiddleName")
+    public void invalidMiddleName()
+    {
+        badEmployee = new Employee("647173,Mr.,Milan,ASD,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidLastName")
+    public void invalidLastName()
+    {
+        badEmployee = new Employee("647173,Mr.,Milan,F,,M,milan.krawczyk@hotmail.com,4/4/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidGender")
+    public void validGender()
+    {
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,BAD,milan.krawczyk@hotmail.com,4/4/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidEmail")
+    public void invalidEmail()
+    {
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,M,,4/4/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidJoinDate")
+    public void invalidJoinDate()
+    {
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,1/19/2300,123681");
+        assertEquals(false, badEmployee.isValid());
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,50/50/2300,123681");
+        assertEquals(false, badEmployee.isValid());
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,zz/zz/zzzz,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
+
+    @Test
+    @DisplayName("invalidDob")
+    public void invalidDob()
+    {
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/3005,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,50/50/1980,1/19/2012,123681");
+        assertEquals(false, badEmployee.isValid());
+        badEmployee = new Employee("647173,Mr.,Milan,F,Krawczyk,M,milan.krawczyk@hotmail.com,4/4/1980,zz/zz/zzzz,123681");
+        assertEquals(false, badEmployee.isValid());
+    }
 }
