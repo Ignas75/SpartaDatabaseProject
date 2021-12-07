@@ -1,6 +1,6 @@
 package com.database.employee;
 
-public class Employee implements Comparable {
+public class Employee implements Comparable<Employee> {
 
     private int ID;
     private String title;
@@ -12,6 +12,7 @@ public class Employee implements Comparable {
     private String dob;
     private String joinDate;
     private int salary;
+    private String entry;
 
     public Employee(String entry)
     {
@@ -26,10 +27,17 @@ public class Employee implements Comparable {
         dob = arr[7];
         joinDate = arr[8];
         salary = Integer.parseInt(arr[9]);
+        this.entry = entry;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
+    public int compareTo(Employee e) {
+        if (ID > e.ID) return 1;
+        else if (ID == e.ID) return 0;
+        else return -1;
+    }
+
+    public String toString()
+    {
+        return entry;
     }
 }
