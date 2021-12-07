@@ -40,4 +40,8 @@ public class Employee implements Comparable<Employee> {
     {
         return entry;
     }
+
+    public int getID(){
+        return ID;
+    }
 }
