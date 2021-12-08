@@ -97,4 +97,6 @@ public class Reader {
 
     private Employee createEmployee(String line)
     {
+        return new Employee(line);
+    }
 }
