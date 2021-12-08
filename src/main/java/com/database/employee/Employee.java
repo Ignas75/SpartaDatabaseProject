@@ -57,38 +57,78 @@ public class Employee implements Comparable<Employee> {
         return entry;
     }
 
-    public boolean isValid() {
-        String titleLowerCase = title.toLowerCase();
-        String genderLowerCase = gender.toLowerCase();
+    public static boolean isValid(String entry)
+    {
+        String[] arr;
+        arr = entry.split(",");
 
-        if (salary == -1 || id == -1) {
-            System.out.println("Salary or ID should be an int >= 0! Salary: " + salary + " | ID: " + id);
+        if (arr.length != 10)
+        {
+            System.out.println("Not enough values in the entry");
             return false;
-        } else if (middleName.length() != 1 || !middleName.matches("[a-zA-Z]+")) {
-            System.out.println("Middle name should be 1 letter! Middle name: " + middleName);
-            return false;
-        } else if (firstName.length() < 1 || lastName.length() < 1 || !firstName.matches("[a-zA-Z]+") || !lastName.matches("[a-zA-Z]+")) {
-            System.out.println("First name or last name is not at least 1 char contains non-letters! First name: " + firstName + " | Last name: " + lastName);
-            return false;
-        } else if (!titleLowerCase.equals("mr.") && !titleLowerCase.equals("mrs.") && !titleLowerCase.equals("ms.") && !titleLowerCase.equals("prof") &&
-                !titleLowerCase.equals("dr.") && !titleLowerCase.equals("drs.") && !titleLowerCase.equals("hon.")) {
-            System.out.println("Title is incorrect! Title: " + title);
-            return false;
-        } else if (!genderLowerCase.equals("m") && !genderLowerCase.equals("f") && !genderLowerCase.equals("u")) {
-            System.out.println("Gender is incorrect! Gender: " + gender);
-            return false; // U = Undisclosed.
-        } else if (email == "") {
-            System.out.println("Email is empty!");
-            return false;
-        } else if (!compareDates()) {
-            System.out.println("ERROR with Join date / DOB! Join date: " + joinDate + " | DOB: " + dob);
-            return false;
-        } else return true;
-    }
+        }
+        else
+        {   int id = -1;
+            String title = arr[1].trim();
+            String firstName = arr[2].trim();
+            String middleName = arr[3].trim();
+            String lastName = arr[4].trim();
+            String gender = arr[5].trim();
+            String email = arr[6].trim();
+            String dob = arr[7].trim();
+            String joinDate = arr[8].trim();
+            int salary = -1;
+
+            try {
+                id = Integer.parseInt(arr[0].trim());
+                salary = Integer.parseInt(arr[9].trim());
+            } catch (NumberFormatException e) {
+                System.out.println("CAUGHT ERROR parsing ID / Salary to int!");
+                id = -1;
+                salary = -1;
+            }
+
+            String titleLowerCase = title.toLowerCase();
+            String genderLowerCase = gender.toLowerCase();
+
+            if (salary == -1 || id == -1){
+                System.out.println("Salary or ID should be an int >= 0! Salary: " + salary + " | ID: " + id);
+                return false;
+            }
+            else if (middleName.length() != 1 || !middleName.matches("[a-zA-Z]+")){
+                System.out.println("Middle name should be 1 letter! Middle name: " + middleName);
+                return false;
+            }
+            else if (firstName.length() < 1 || lastName.length() < 1 || !firstName.matches("[a-zA-Z]+") || !lastName.matches("[a-zA-Z]+")) {
+                System.out.println("First name or last name is not at least 1 char contains non-letters! First name: " + firstName + " | Last name: " + lastName );
+                return false;
+            }
+            else if (!titleLowerCase.equals("mr.") && !titleLowerCase.equals("mrs.") && !titleLowerCase.equals("ms.") && !titleLowerCase.equals("prof") &&
+                    !titleLowerCase.equals("dr.") && !titleLowerCase.equals("drs.") && !titleLowerCase.equals("hon.")) {
+                System.out.println("Title is incorrect! Title: " + title);
+                return false;
+            }
+            else if (!genderLowerCase.equals("m") && !genderLowerCase.equals("f") && !genderLowerCase.equals("u")) {
+                System.out.println("Gender is incorrect! Gender: " + gender);
+                return false; // U = Undisclosed.
+            }
+            else if (email == "") {
+                System.out.println("Email is empty!");
+                return false;
+            }
+
+            else if(!compareDates(dob, joinDate)) {
+                System.out.println("ERROR with Join date / DOB! Join date: " + joinDate + " | DOB: " + dob);
+                return false;
+            }
+            else return true;
+        }
+
 
     public int getID() {
         return id;
     }
+
 
     private boolean compareDates() {
         String[] dateJoinedArray;
