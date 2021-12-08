@@ -11,8 +11,19 @@ import java.util.List;
 
 public class Driver {
     public static void main(String[] args) {
-        Cli cli = new Cli();
-        cli.menu();
+
+        String fileName = "EmployeeRecords.csv";
+        try{
+            File file = new File(fileName);
+            List<Employee> data = new ArrayList<>();
+            Reader reader = new Reader();
+            reader.readCSV(file);
+            List<Employee> employeeData = reader.getFilteredData();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+//        Cli cli = new Cli();
+//        cli.menu();
 
 //        String fileName = "EmployeeRecords.csv";
 //        try {

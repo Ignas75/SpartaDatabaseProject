@@ -17,16 +17,27 @@ public class Reader {
     private List<Employee> data;
     private List<Employee> filteredData;
     private List<Employee> duplicateData;
+    private int duplicateDataCounter;
+    private int corruptedDataCounter;
 
-    public void readCSV(File fileName, List<Employee> list) {
-        try {
+
+    public void readCSV(File fileName)
+    {
+        duplicateDataCounter = 0;
+        corruptedDataCounter = 0;
+        data = new ArrayList<>();
+        filteredData = new ArrayList<>();
+        duplicateData = new ArrayList<>();
+        try
+        {
+
             Scanner reader = new Scanner(fileName);
             //discard the first line
             if (reader.hasNextLine())
                 reader.nextLine();
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                list.add(createEmployee(line));
+                data.add(createEmployee(line));
             }
         } catch (IOException e) {
             System.out.println("File does not exist");
@@ -59,7 +70,31 @@ public class Reader {
         return filteredList;
     }
 
-    private Employee createEmployee(String line) {
-        return new Employee(line);
+    public List<Employee> getData()
+    {
+        return data;
     }
+
+    public List<Employee> getDuplicateData()
+    {
+        return duplicateData;
+    }
+
+    public List<Employee> getFilteredData()
+    {
+        return filteredData;
+    }
+
+    public int getCorruptedDataCounter()
+    {
+        return corruptedDataCounter;
+    }
+
+    public int getDuplicateDataCounter()
+    {
+        return duplicateDataCounter;
+    }
+
+    private Employee createEmployee(String line)
+    {
 }

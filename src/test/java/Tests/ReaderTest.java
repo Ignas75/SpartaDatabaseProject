@@ -21,8 +21,8 @@ public class ReaderTest
         File file = new File("src/main/resources/testCSV.csv");
         Reader reader = new Reader();
         List<Employee> list = new ArrayList<>();
-        reader.readCSV(file, list);
-        assert(list.size() == 19);
+        reader.readCSV(file);
+        assert(reader.getData().size() == 19);
     }
 
     @Test
