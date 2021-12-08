@@ -21,13 +21,11 @@ public class Employee implements Comparable<Employee> {
     private String[] arr;
     private static LocalDate localDateToday = LocalDate.now();
 
-    public Employee(String entry)
-    {
+    public Employee(String entry) {
         arr = entry.split(",");
 
-        if (arr.length != 10)  System.out.println("Not enough values in the entry");
-        else
-        {
+        if (arr.length != 10) System.out.println("Not enough values in the entry");
+        else {
             title = arr[1].trim();
             firstName = arr[2].trim();
             middleName = arr[3].trim();
@@ -55,8 +53,7 @@ public class Employee implements Comparable<Employee> {
         else return -1;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return entry;
     }
 
@@ -126,14 +123,14 @@ public class Employee implements Comparable<Employee> {
             }
             else return true;
         }
-    }
 
-    public int getID(){
+
+    public int getID() {
         return id;
     }
 
-    private static boolean compareDates(String dob, String joinDate)
-    {
+
+    private boolean compareDates() {
         String[] dateJoinedArray;
         String[] dobArray;
         dateJoinedArray = joinDate.split("/");
