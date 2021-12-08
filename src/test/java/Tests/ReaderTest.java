@@ -4,7 +4,6 @@ import com.database.employee.Employee;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,26 +12,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class ReaderTest
 {
     @Test
-    public void ReaderTest()
+    public void testReader()
     {
-        File file = new File("asd");
-
-//        try
-//        {
-//            Reader reader = new Reader();
-//            List<Employee> list = new ArrayList<>();
-//            reader.readCSV(file, list);
-//            fail("exception not thrown");
-//        }
-//        catch(IOException e)
-//        {
-//
-//        }
+        File file = new File("src/main/resources/testCSV.csv");
+        Reader reader = new Reader();
+        List<Employee> list = new ArrayList<>();
+        reader.readCSV(file, list);
+        assert(list.size() == 19);
     }
 
     @Test
