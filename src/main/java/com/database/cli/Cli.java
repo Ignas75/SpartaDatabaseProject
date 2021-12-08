@@ -21,17 +21,17 @@ public class Cli {
     public void menu() {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Please Select an Option" + "\n" + "'1' for File 1" + "\n" + "'2' for File 2 "
+        System.out.println("Please Select an Option" + "\n" + "'1' for EmployeeRecords.csv" + "\n" + "'2' for EmployeeRecordsLarge.csv"
                 + "\n" + "'3' to Upload File");
         try {
             option = Integer.parseInt(input.nextLine().trim());
             switch (option) {
                 case (1):
-                    System.out.println("\nFile 1 Selected");
+                    System.out.println("\nEmployeeRecords.csv Selected");
                     selectFile(option);
                     break;
                 case (2):
-                    System.out.println("\nFile 2 Selected");
+                    System.out.println("\nEmployeeRecordsLarge.csv Selected");
                     selectFile(option);
                     break;
                 case (3):
@@ -62,14 +62,14 @@ public class Cli {
 //                chooser = new JFileChooser("src/main/resources/EmployeeRecords.csv");
                     chosenFile = new File("src/main/resources/EmployeeRecords.csv");
                     System.out.println(chosenFile.getName());
-                    reader.readCSV(chosenFile, employeeList);
+                    reader.readCSV(chosenFile);
                     System.out.println(employeeList);
                     break;
                 case (2):
 //                chooser = new JFileChooser("src/main/resources/testCSV.csv");
-                    chosenFile = new File("src/main/resources/testCSV.csv");
+                    chosenFile = new File("src/main/resources/EmployeeRecordsLarge.csv");
                     System.out.println(chosenFile.getName());
-                    reader.readCSV(chosenFile, employeeList);
+                    reader.readCSV(chosenFile);
                     System.out.println(employeeList);
                     break;
                 case (3):
@@ -80,7 +80,7 @@ public class Cli {
                     if (choice != JFileChooser.APPROVE_OPTION) return;
                     chosenFile = chooser.getSelectedFile();
                     System.out.println(chosenFile.getName());
-                    reader.readCSV(chosenFile, employeeList);
+                    reader.readCSV(chosenFile);
                     System.out.println(employeeList);
                     break;
                 default:

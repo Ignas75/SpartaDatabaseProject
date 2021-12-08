@@ -21,15 +21,13 @@ public class Reader {
     private int corruptedDataCounter;
 
 
-    public void readCSV(File fileName)
-    {
+    public void readCSV(File fileName) {
         duplicateDataCounter = 0;
         corruptedDataCounter = 0;
         data = new ArrayList<>();
         filteredData = new ArrayList<>();
         duplicateData = new ArrayList<>();
-        try
-        {
+        try {
 
             Scanner reader = new Scanner(fileName);
             //discard the first line
@@ -70,33 +68,27 @@ public class Reader {
         return filteredList;
     }
 
-    public List<Employee> getData()
-    {
+    public List<Employee> getData() {
         return data;
     }
 
-    public List<Employee> getDuplicateData()
-    {
+    public List<Employee> getDuplicateData() {
         return duplicateData;
     }
 
-    public List<Employee> getFilteredData()
-    {
+    public List<Employee> getFilteredData() {
         return filteredData;
     }
 
-    public int getCorruptedDataCounter()
-    {
+    public int getCorruptedDataCounter() {
         return corruptedDataCounter;
     }
 
-    public int getDuplicateDataCounter()
-    {
+    public int getDuplicateDataCounter() {
         return duplicateDataCounter;
     }
 
-    private Employee createEmployee(String line)
-    {
+    private Employee createEmployee(String line) {
         return new Employee(line);
     }
 }
