@@ -13,9 +13,16 @@ public class Reader
     private List<Employee> data;
     private List<Employee> filteredData;
     private List<Employee> duplicateData;
+    private int duplicateDataCounter;
+    private int corruptedDataCounter;
 
-    public void readCSV(File fileName, List<Employee> list)
+    public void readCSV(File fileName)
     {
+        duplicateDataCounter = 0;
+        corruptedDataCounter = 0;
+        data = new ArrayList<>();
+        filteredData = new ArrayList<>();
+        duplicateData = new ArrayList<>();
         try
         {
             Scanner reader = new Scanner(fileName);
@@ -25,7 +32,7 @@ public class Reader
             while(reader.hasNextLine())
             {
                 String line = reader.nextLine();
-                list.add(createEmployee(line));
+                data.add(createEmployee(line));
             }
         }
         catch(IOException e)
@@ -56,6 +63,31 @@ public class Reader
         }
         filteredData = filteredList;
         return filteredList;
+    }
+
+    public List<Employee> getData()
+    {
+        return data;
+    }
+
+    public List<Employee> getDuplicateData()
+    {
+        return duplicateData;
+    }
+
+    public List<Employee> getFilteredData()
+    {
+        return filteredData;
+    }
+
+    public int getCorruptedDataCounter()
+    {
+        return corruptedDataCounter;
+    }
+
+    public int getDuplicateDataCounter()
+    {
+        return duplicateDataCounter;
     }
 
     private Employee createEmployee(String line)

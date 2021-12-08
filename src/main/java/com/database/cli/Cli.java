@@ -59,14 +59,15 @@ public class Cli {
 //                chooser = new JFileChooser("src/main/resources/EmployeeRecords.csv");
                 chosenFile = new File("src/main/resources/EmployeeRecords.csv");
                 System.out.println(chosenFile.getName());
-                reader.readCSV(chosenFile,employeeList.getEmployeeList());
+                //reader.readCSV(chosenFile,employeeList.getEmployeeList());
                 System.out.println(employeeList);
                 break;
             case (2):
 //                chooser = new JFileChooser("src/main/resources/testCSV.csv");
                 chosenFile = new File("src/main/resources/testCSV.csv");
                 System.out.println(chosenFile.getName());
-                reader.readCSV(chosenFile,employeeList.getEmployeeList());
+                //TODO change to member variable list
+                //reader.readCSV(chosenFile,employeeList.getEmployeeList());
                 System.out.println(employeeList);
                 break;
             case (3):
@@ -77,7 +78,7 @@ public class Cli {
                 if (choice != JFileChooser.APPROVE_OPTION) return;
                 chosenFile = chooser.getSelectedFile();
                 System.out.println(chosenFile.getName());
-                reader.readCSV(chosenFile,employeeList.getEmployeeList());
+                //reader.readCSV(chosenFile,employeeList.getEmployeeList());
                 System.out.println(employeeList);
                 break;
             default:

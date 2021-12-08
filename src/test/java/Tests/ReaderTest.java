@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.database.reader.Reader;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReaderTest
 {
@@ -17,8 +21,8 @@ public class ReaderTest
         File file = new File("testCSV.csv");
         Reader reader = new Reader();
         List<Employee> list = new ArrayList<>();
-        reader.readCSV(file, list);
-        assert(list.size() == 19);
+        reader.readCSV(file);
+        assert(reader.getData().size() == 19);
     }
 
     @Test

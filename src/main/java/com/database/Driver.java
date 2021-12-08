@@ -16,8 +16,8 @@ public class Driver
             File file = new File(fileName);
             List<Employee> data = new ArrayList<>();
             Reader reader = new Reader();
-            reader.readCSV(file, data);
-            List<Employee> employeeData = reader.filterDuplicates(data);
+            reader.readCSV(file);
+            List<Employee> employeeData = reader.getFilteredData();
         }catch (Exception e){
             e.printStackTrace();
         }
