@@ -11,7 +11,7 @@ import java.util.List;
 public class Driver
 {
     public static void main(String[] args) {
-        String fileName = "EmployeeRecords.csv";
+        String fileName = "src/main/resources/EmployeeRecords.csv";
         try{
             File file = new File(fileName);
             List<Employee> data = new ArrayList<>();
