@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class SQLObject {
-
     private Connection connection = null;
     private String databaseName = "employee_records";
 
@@ -43,6 +42,7 @@ public class SQLObject {
             statement.setString(2, employee.getDob());
             statement.setString(2, employee.getJoinDate());
             statement.setInt(2, employee.getSalary());
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
