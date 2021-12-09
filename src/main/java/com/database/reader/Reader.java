@@ -24,8 +24,7 @@ public class Reader {
         corruptDataLines = new ArrayList<>();
         filteredData = new HashSet<>();
         duplicateData = new ArrayList<>();
-        try {
-            Scanner reader = new Scanner(fileName);
+        try(Scanner reader = new Scanner(fileName)) {
             //discard the first line
             if (reader.hasNextLine())
                 reader.nextLine();
