@@ -12,13 +12,13 @@ import java.util.Properties;
 
 public class SQLObject {
 
-    private static Connection connection = null;
+    private Connection connection = null;
     public PreparedStatement createStatement = null;
     public PreparedStatement insertStatement = null;
     private String databaseName = "employee_records";
 
 
-    public PreparedStatement getCreateStatement() {
+    public  PreparedStatement getCreateStatement() {
         if (createStatement == null) {
             try {
                 createStatement = ConnectionFactory.getConnection().prepareStatement(
@@ -88,7 +88,7 @@ public class SQLObject {
     }
 
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         try {
             if (connection == null) {
                 Properties properties = new Properties();
