@@ -40,5 +40,4 @@ public class SQLConnection
             System.out.println("Something wrong happened whilst closing the connection!");
         }
     }
-
 }
