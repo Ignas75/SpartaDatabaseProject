@@ -26,4 +26,13 @@ public class ReaderTest
         assert(reader.getCorruptedDataCounter() == 3);
         assert(reader.getDuplicateDataCounter() == 4);
     }
+
+    @Test
+    public void testReaderFileDoesNotExist()
+    {
+        File file = new File("");
+        Reader reader = new Reader();
+        List<Employee> list = new ArrayList<>();
+        reader.readCSV(file);
+    }
 }

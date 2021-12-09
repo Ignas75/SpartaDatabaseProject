@@ -77,7 +77,7 @@ public class Employee implements Comparable<Employee> {
             return false;
         }
         Employee other = (Employee) e;
-        if(id != other.getID()){
+        if(id != other.getId()){
             return true;
         }
         return true;

@@ -79,4 +79,23 @@ public class Reader {
     public List<String> getCorruptDataLines(){
         return corruptDataLines;
     }
+
+    public Set<Employee> head(int n)
+    {
+        if( n > filteredData.size())
+        {
+            System.out.println("The set only has " + filteredData.size() + " elements." );
+            return null;
+        }
+
+        Set<Employee> out = new HashSet<>(n);
+        Iterator<Employee> iterator = filteredData.iterator();
+        int counter = 0;
+        while(counter < n)
+        {
+            out.add(iterator.next());
+            counter++;
+        }
+        return out;
+    }
 }
