@@ -55,9 +55,9 @@ public class Reader {
             Employee currentEmployee = list.get(i);
             if (prevInserted.compareTo(currentEmployee) == 0) {
                 duplicateData.add(currentEmployee);
-                System.out.println("Duplicate with " + currentEmployee.getID());
+                System.out.println("Duplicate with " + currentEmployee.getId());
                 // TODO: ADD LOGGING OF DUPLICATES HERE
-                logger.log(Level.INFO, "Duplicate Entry Logged", currentEmployee.getID());
+                logger.log(Level.INFO, "Duplicate Entry Logged", currentEmployee.getId());
             } else {
                 System.out.println("added employee");
                 filteredList.add(currentEmployee);
