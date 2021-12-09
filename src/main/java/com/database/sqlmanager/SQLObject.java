@@ -1,6 +1,6 @@
 package com.database.sqlmanager;
 
-import com.database.factories.ConnectionFactory;
+import com.database.employee.Employee;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,56 +13,43 @@ import java.util.Properties;
 public class SQLObject {
 
     private Connection connection = null;
-    public PreparedStatement createStatement = null;
-    public PreparedStatement insertStatement = null;
     private String databaseName = "employee_records";
 
-
     public void CreateStatement() {
-        String statement = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
+        String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
                 "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
                 "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
-
-        if (createStatement == null) {
-            try {
-                createStatement = establishConnection().prepareStatement(
-                        statement);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                // TODO ADD LOGGER?!?
-            }
-        }
-    }
-
-    public void InsertStatement() {
-        String statement = "INSERT INTO " + databaseName + " (EmployeeID int, Title VARCHAR (6), FirstName VARCHAR (35)," +
-                " MiddleInital VARCHAR (3), LastName VARCHAR(35), Gender VARCHAR (1), Email (62), DOB DATE," +
-                " DateOfJoining DATE, Salary int )" +
-                " VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
-        if (insertStatement == null) {
-            try {
-                insertStatement = establishConnection().prepareStatement(statement);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                // TODO ADD LOGGER?!?
-            }
-        }
-    }
-
-    public void closeStatement() {
-        try {
-            if (createStatement != null) createStatement.close();
-            if (insertStatement != null) insertStatement.close();
-            if (connection != null) connection.close();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
         }
     }
 
+    public void InsertStatement(Employee employee) {
+        String query = "INSERT INTO " + databaseName + " (EmployeeID int, Title VARCHAR (6), FirstName VARCHAR (35)," +
+                " MiddleInital VARCHAR (3), LastName VARCHAR(35), Gender VARCHAR (1), Email (62), DOB DATE," +
+                " DateOfJoining DATE, Salary int )" +
+                " VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setInt(1, employee.getId());
+            statement.setString(2, employee.getTitle());
+            statement.setString(3, employee.getFirstName());
+            statement.setString(4, employee.getMiddleName());
+            statement.setString(5, employee.getLastName());
+            statement.setString(2, employee.getGender());
+            statement.setString(2, employee.getEmail());
+            statement.setString(2, employee.getDob());
+            statement.setString(2, employee.getJoinDate());
+            statement.setInt(2, employee.getSalary());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO ADD LOGGER?!?
+        }
+    }
 
-    public Connection establishConnection() {
+    public void establishConnection() {
         try {
             if (connection == null) {
                 Properties properties = new Properties();
@@ -76,23 +63,10 @@ public class SQLObject {
             // TODO ADD LOGGER?!?
             System.err.println("Could not load connection.properties");
             e.printStackTrace();
-
-
         } catch (SQLException e) {
             // TODO ADD LOGGER?!?
             System.err.println("Could not establish connection, something wrong with: connection properties: dburl / dbuser / dbpassword");
             e.printStackTrace();
         }
-        return connection;
     }
-
-
-//    public static void closeConnection() {
-//        try {
-//            if (connection != null) connection.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            // TODO ADD LOGGER?!?
-//        }
-//    }
 }
