@@ -128,10 +128,7 @@ public class Employee implements Comparable<Employee> {
         }
     }
 
-    public int getID(){
-        return id;
-    }
-
+    // Helper method for isValid()
     private static boolean compareDates(String dob, String joinDate)
     {
         String[] dateJoinedArray;
@@ -150,5 +147,47 @@ public class Employee implements Comparable<Employee> {
             System.out.println("CAUGHT ERROR Date values are invalid!");
         }
         return false;
+    }
+
+    // GETTERS
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public String getJoinDate() {
+        return joinDate;
+    }
+
+    public int getSalary() {
+        return salary;
     }
 }
