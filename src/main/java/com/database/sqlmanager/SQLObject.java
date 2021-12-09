@@ -18,62 +18,36 @@ public class SQLObject {
     private String databaseName = "employee_records";
 
 
-    public  PreparedStatement getCreateStatement() {
+    public void CreateStatement() {
+        String statement = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
+                "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
+                "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
+
         if (createStatement == null) {
             try {
-                createStatement = ConnectionFactory.getConnection().prepareStatement(
-                        "CREATE TABLE " + databaseName +
-                                " (EmployeeID int, " +
-                                "Title VARCHAR (6), " +
-                                "FirstName VARCHAR (35), " +
-                                "MiddleInital VARCHAR (3), " +
-                                "LastName VARCHAR(35), " +
-                                "Gender VARCHAR (1), " +
-                                "Email (62), " +
-                                "DOB DATE, " +
-                                "DateOfJoining DATE, " +
-                                "Salary int )");
+                createStatement = establishConnection().prepareStatement(
+                        statement);
             } catch (SQLException e) {
                 e.printStackTrace();
                 // TODO ADD LOGGER?!?
             }
         }
-        return createStatement;
     }
 
-    public PreparedStatement getInsertStatement() {
+    public void InsertStatement() {
+        String statement = "INSERT INTO " + databaseName + " (EmployeeID int, Title VARCHAR (6), FirstName VARCHAR (35)," +
+                " MiddleInital VARCHAR (3), LastName VARCHAR(35), Gender VARCHAR (1), Email (62), DOB DATE," +
+                " DateOfJoining DATE, Salary int )" +
+                " VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
         if (insertStatement == null) {
             try {
-                insertStatement = ConnectionFactory.getConnection().prepareStatement(
-                        "INSERT INTO " + databaseName +
-                                " (EmployeeID int, " +
-                                "Title VARCHAR (6), " +
-                                "FirstName VARCHAR (35), " +
-                                "MiddleInital VARCHAR (3), " +
-                                "LastName VARCHAR(35), " +
-                                "Gender VARCHAR (1), " +
-                                "Email (62), " +
-                                "DOB DATE, " +
-                                "DateOfJoining DATE, " +
-                                "Salary int )" +
-                                "VALUES " +
-                                "(?," +
-                                "?," +
-                                "?," +
-                                "?," +
-                                "?," +
-                                "?," +
-                                "?," +
-                                "?," +
-                                "?," +
-                                "?)");
+                insertStatement = establishConnection().prepareStatement(statement);
 
             } catch (SQLException e) {
                 e.printStackTrace();
                 // TODO ADD LOGGER?!?
             }
         }
-        return insertStatement;
     }
 
     public void closeStatement() {
@@ -88,7 +62,7 @@ public class SQLObject {
     }
 
 
-    public Connection getConnection() {
+    public Connection establishConnection() {
         try {
             if (connection == null) {
                 Properties properties = new Properties();
