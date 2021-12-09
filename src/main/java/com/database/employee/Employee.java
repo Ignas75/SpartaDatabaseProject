@@ -60,6 +60,29 @@ public class Employee implements Comparable<Employee> {
         return entry;
     }
 
+    @Override
+    public int hashCode(){
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object e){
+        if(e == null){
+            return false;
+        }
+        if(this == e){
+            return true;
+        }
+        if(getClass() != e.getClass()){
+            return false;
+        }
+        Employee other = (Employee) e;
+        if(id != other.getID()){
+            return true;
+        }
+        return true;
+    }
+
     public static boolean isValid(String entry)
     {
         String[] arr;
@@ -137,7 +160,7 @@ public class Employee implements Comparable<Employee> {
         dobArray = dob.split("/");
 
         try {
-            if (dateJoinedArray.length == 3 || dobArray.length == 3) {
+            if (dateJoinedArray.length == 3 && dobArray.length == 3) {
                 LocalDate localDateJoined = LocalDate.of(Integer.parseInt(dateJoinedArray[2]), Integer.parseInt(dateJoinedArray[0]), Integer.parseInt(dateJoinedArray[1]));
                 LocalDate localDateDob = LocalDate.of(Integer.parseInt(dobArray[2]), Integer.parseInt(dobArray[0]), Integer.parseInt(dobArray[1]));
                 if (localDateToday.isBefore(localDateJoined) || localDateToday.isBefore(localDateDob)) return false;
