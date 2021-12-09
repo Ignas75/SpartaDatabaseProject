@@ -3,6 +3,7 @@ package com.database.employee;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class Employee implements Comparable<Employee> {
 
@@ -55,9 +56,23 @@ public class Employee implements Comparable<Employee> {
         else return -1;
     }
 
+    @Override
     public String toString()
     {
-        return entry;
+        return "Employee{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", dob='" + dob + '\'' +
+                ", joinDate='" + joinDate + '\'' +
+                ", salary=" + salary +
+                ", entry='" + entry + '\'' +
+                ", arr=" + Arrays.toString(arr) +
+                '}';
     }
 
     @Override
