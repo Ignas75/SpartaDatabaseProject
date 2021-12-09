@@ -10,7 +10,6 @@ import java.util.Properties;
 public class SQLConnection
 {
     private static Connection theConnection = null;
-
     public static Connection getConnection() {
         if (theConnection == null)
         {
