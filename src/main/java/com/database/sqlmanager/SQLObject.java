@@ -10,12 +10,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Properties;
 
-public class SQLObject {
+public class SQLObject implements Runnable {
     private Connection connection = null;
     private final String databaseName = "employee_records";
+    private HashSet<Employee> batch;
+
+    public SQLObject(){batch = null;}
+
+    public SQLObject(HashSet<Employee> employees){
+        this.batch = employees;
+    }
 
     public void CreateStatement() {
         String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
@@ -79,7 +86,7 @@ public class SQLObject {
     }
 
     // Untested...
-    public void batchInsert(List<Employee> employees)  {
+    public void batchInsert(HashSet<Employee> employees)  {
         String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
                 "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
                 "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
@@ -110,6 +117,13 @@ public class SQLObject {
             // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
 
+        }
+    }
+
+    @Override
+    public void run() {
+        if(batch != null){
+            batchInsert(batch);
         }
     }
 }
