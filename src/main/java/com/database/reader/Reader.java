@@ -7,7 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Reader {
     private Logger logger = LogManager.getLogger("SpartaDatabaseProject");
@@ -30,26 +33,49 @@ public class Reader {
                 reader.nextLine();
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                if(Employee.isValid(line)){
-                    // adds to filtered data and checking if duplicates exist
-                    if(!filteredData.add(createEmployee(line))){
-                        duplicateData.add(createEmployee(line));
-                        duplicateDataCounter++;
-                    }
-                }
-                else{
-                    // not counting empty lines as corrupt entry
-                    if(!line.equals("")){
-                        corruptDataLines.add(line);
-                        corruptedDataCounter++;
-                    }
-                }
+                processEmployeeLine(line);
             }
         } catch (IOException e) {
             System.out.println("File does not exist");
-//            e.printStackTrace();
-            //TODO ADD LOGGER HERE
             logger.log(Level.ERROR, "IOException Thrown", e);
+        }
+    }
+
+    public void readCsvWithLambdas(File fileName) {
+        duplicateDataCounter = 0;
+        corruptedDataCounter = 0;
+        corruptDataLines = new ArrayList<>();
+        filteredData = new HashSet<>();
+        duplicateData = new ArrayList<>();
+        Path path = fileName.toPath();
+        try(Stream<String> stream = Files.lines(path)) {
+            stream.skip(1)
+                    .forEach(this::processEmployeeLine);
+        } catch (IOException e) {
+            System.out.println("File does not exist");
+            logger.log(Level.ERROR, "IOException Thrown", e);
+        }
+    }
+
+    private void processEmployeeLine(String line){
+        if(Employee.isValid(line)){
+            // adds to filtered data and checking if duplicates exist
+            if(!filteredData.add(createEmployee(line))){
+                duplicateData.add(createEmployee(line));
+                duplicateDataCounter++;
+                logger.log(Level.ERROR, "Duplicate Entry Logged", createEmployee(line));
+
+
+            }
+        }
+        else{
+            // not counting empty lines as corrupt entry
+            if(!line.equals("")){
+                corruptDataLines.add(line);
+                corruptedDataCounter++;
+                logger.log(Level.ERROR, "Corrupted Entry Logged", line);
+
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 package com.database.sqlmanager;
 
+import com.database.cli.Cli;
 import com.database.employee.Employee;
+import org.apache.logging.log4j.Level;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class SQLObject {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
         } catch (SQLException e) {
             e.printStackTrace();
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
             // TODO ADD LOGGER?!?
         }
     }
@@ -47,6 +50,8 @@ public class SQLObject {
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
+
         }
     }
 
@@ -61,13 +66,50 @@ public class SQLObject {
                 connection = DriverManager.getConnection(url, userid, password);
             }
         } catch (IOException e) {
-            // TODO ADD LOGGER?!?
             System.err.println("Could not load connection.properties");
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "IOException Thrown", e);
             e.printStackTrace();
         } catch (SQLException e) {
-            // TODO ADD LOGGER?!?
             System.err.println("Could not establish connection, something wrong with: connection properties: dburl / dbuser / dbpassword");
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
             e.printStackTrace();
+        }
+    }
+
+    // Untested...
+    public void batchInsert(List<Employee> employees)  {
+        String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
+                "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
+                "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            int i = 0;
+            for (Employee e : employees) {
+                statement.setInt(1, e.getId());
+                statement.setString(2, e.getTitle());
+                statement.setString(3, e.getFirstName());
+                statement.setString(4, e.getMiddleName());
+                statement.setString(5, e.getLastName());
+                statement.setString(6, e.getGender());
+                statement.setString(7, e.getEmail());
+                statement.setString(8, e.getDob());
+                statement.setString(9, e.getJoinDate());
+                statement.setInt(10, e.getSalary());
+
+                statement.addBatch();
+                i++;
+
+                if (i % 1000 == 0 || i == employees.size()) {
+                    statement.executeBatch(); // Execute every 1000 items.
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
+
         }
     }
 
