@@ -37,8 +37,6 @@ public class Reader {
             }
         } catch (IOException e) {
             System.out.println("File does not exist");
-//            e.printStackTrace();
-            //TODO ADD LOGGER HERE
             logger.log(Level.ERROR, "IOException Thrown", e);
         }
     }
@@ -51,11 +49,10 @@ public class Reader {
         duplicateData = new ArrayList<>();
         Path path = fileName.toPath();
         try(Stream<String> stream = Files.lines(path)) {
-            stream.forEach(this::processEmployeeLine);
+            stream.skip(1)
+                    .forEach(this::processEmployeeLine);
         } catch (IOException e) {
             System.out.println("File does not exist");
-//            e.printStackTrace();
-            //TODO ADD LOGGER HERE
             logger.log(Level.ERROR, "IOException Thrown", e);
         }
     }
@@ -66,7 +63,6 @@ public class Reader {
             if(!filteredData.add(createEmployee(line))){
                 duplicateData.add(createEmployee(line));
                 duplicateDataCounter++;
-                //TODO ADD LOGGER HERE
                 logger.log(Level.ERROR, "Duplicate Entry Logged", createEmployee(line));
 
 
@@ -77,7 +73,6 @@ public class Reader {
             if(!line.equals("")){
                 corruptDataLines.add(line);
                 corruptedDataCounter++;
-                //TODO ADD LOGGER HERE
                 logger.log(Level.ERROR, "Corrupted Entry Logged", line);
 
             }
