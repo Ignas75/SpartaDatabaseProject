@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class SQLObject {
     private Connection connection = null;
-    private String databaseName = "employee_records";
+    private final String databaseName = "employee_records";
 
     public void CreateStatement() {
         String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
@@ -37,11 +37,11 @@ public class SQLObject {
             statement.setString(3, employee.getFirstName());
             statement.setString(4, employee.getMiddleName());
             statement.setString(5, employee.getLastName());
-            statement.setString(2, employee.getGender());
-            statement.setString(2, employee.getEmail());
-            statement.setString(2, employee.getDob());
-            statement.setString(2, employee.getJoinDate());
-            statement.setInt(2, employee.getSalary());
+            statement.setString(6, employee.getGender());
+            statement.setString(7, employee.getEmail());
+            statement.setString(8, employee.getDob());
+            statement.setString(9, employee.getJoinDate());
+            statement.setInt(10, employee.getSalary());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

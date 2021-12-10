@@ -40,4 +40,22 @@ public class ReaderTest
     public void testDuplicateDataAmount(){
         assert(reader.getDuplicateDataCounter() == 4);
     }
+
+    @Test
+    public void testReaderFileDoesNotExist()
+    {
+        File file = new File("");
+        Reader reader = new Reader();
+        List<Employee> list = new ArrayList<>();
+        reader.readCSV(file);
+    }
+
+    @Test
+    public void testReaderFileDoesNotExist()
+    {
+        File file = new File("");
+        Reader reader = new Reader();
+        List<Employee> list = new ArrayList<>();
+        reader.readCSV(file);
+    }
 }
