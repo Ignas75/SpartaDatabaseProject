@@ -19,11 +19,14 @@ public class ReaderTest
 {
     // tests are based on the amount of valid, corrupt and duplicates added to the testCSV
     private static Reader reader;
+    private static Reader streamReader;
     @BeforeAll
     public static void setupFileReader(){
         File file = new File("src/main/resources/testCSV.csv");
         reader = new Reader();
-        reader.readCSV(file);;
+        streamReader = new Reader();
+        reader.readCSV(file);
+        streamReader.readCsvWithLambdas(file);
     }
 
     @Test
@@ -42,11 +45,17 @@ public class ReaderTest
     }
 
     @Test
-    public void testReaderFileDoesNotExist()
-    {
-        File file = new File("");
-        Reader reader = new Reader();
-        List<Employee> list = new ArrayList<>();
-        reader.readCSV(file);
+    public void testStreamReaderValidAmount() {
+        assert(streamReader.getFilteredData().size() == reader.getFilteredData().size());
+    }
+
+    @Test
+    public void testStreamCorruptDataAmount(){
+        assert(streamReader.getCorruptedDataCounter() == reader.getCorruptedDataCounter());
+    }
+
+    @Test
+    public void testStreamDuplicateDataAmount(){
+        assert(streamReader.getDuplicateDataCounter() == reader.getDuplicateDataCounter());
     }
 }
