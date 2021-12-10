@@ -1,6 +1,8 @@
 package com.database.sqlmanager;
 
+import com.database.cli.Cli;
 import com.database.employee.Employee;
+import org.apache.logging.log4j.Level;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class SQLObject {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
         } catch (SQLException e) {
             e.printStackTrace();
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
             // TODO ADD LOGGER?!?
         }
     }
@@ -47,6 +50,8 @@ public class SQLObject {
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
+
         }
     }
 
@@ -61,12 +66,14 @@ public class SQLObject {
                 connection = DriverManager.getConnection(url, userid, password);
             }
         } catch (IOException e) {
-            // TODO ADD LOGGER?!?
             System.err.println("Could not load connection.properties");
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "IOException Thrown", e);
             e.printStackTrace();
         } catch (SQLException e) {
-            // TODO ADD LOGGER?!?
             System.err.println("Could not establish connection, something wrong with: connection properties: dburl / dbuser / dbpassword");
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
             e.printStackTrace();
         }
     }
@@ -99,8 +106,10 @@ public class SQLObject {
                 }
             }
         } catch (SQLException e) {
-            // TODO ADD LOGGER?!?
             e.printStackTrace();
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
+
         }
     }
 }

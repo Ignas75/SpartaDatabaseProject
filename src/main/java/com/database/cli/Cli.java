@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.*;
 
 public class Cli {
-    private final Logger logger = LogManager.getLogger("SpartaDatabaseProject");
+    public static final Logger logger = LogManager.getLogger("SpartaDatabaseProject");
     private File chosenFile;
     private DatabaseController controller;
 

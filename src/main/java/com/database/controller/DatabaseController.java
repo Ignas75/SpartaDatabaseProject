@@ -1,8 +1,10 @@
 package com.database.controller;
 
+import com.database.cli.Cli;
 import com.database.employee.Employee;
 import com.database.reader.Reader;
 import com.database.sqlmanager.SQLObject;
+import org.apache.logging.log4j.Level;
 
 import java.io.File;
 import java.util.Set;
@@ -19,6 +21,7 @@ public class DatabaseController
         {
             System.out.println("Invalid file extension");
             //TODO add logging here
+            Cli.logger.log(Level.ERROR, "Invalid file extension", filePath);
         }
         else
         {
