@@ -12,11 +12,19 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
+
 import java.util.Properties;
 
-public class SQLObject {
+public class SQLObject implements Runnable {
     private Connection connection = null;
     private final String databaseName = "employee_records";
+    private HashSet<Employee> batch;
+
+    public SQLObject(){batch = null;}
+
+    public SQLObject(HashSet<Employee> employees){
+        this.batch = employees;
+    }
 
     public void CreateStatement() {
         String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
@@ -80,6 +88,8 @@ public class SQLObject {
     }
 
     // Untested...
+    public void batchInsert(HashSet<Employee> employees)  {
+
     public void batchInsert(HashSet<Employee> employees) {
         String query = "INSERT INTO " + databaseName + " (EmployeeID int, Title VARCHAR (6), FirstName VARCHAR (35)," +
                 " MiddleInital VARCHAR (3), LastName VARCHAR(35), Gender VARCHAR (1), Email (62), DOB DATE," +
@@ -156,6 +166,13 @@ public class SQLObject {
             System.out.println("Database created successfully...");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
+        if(batch != null){
+            batchInsert(batch);
         }
     }
 }
