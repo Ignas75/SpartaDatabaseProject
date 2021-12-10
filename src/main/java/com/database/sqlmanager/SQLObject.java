@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 
@@ -79,10 +80,11 @@ public class SQLObject {
     }
 
     // Untested...
-    public void batchInsert(List<Employee> employees)  {
-        String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
-                "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
-                "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
+    public void batchInsert(HashSet<Employee> employees) {
+        String query = "INSERT INTO " + databaseName + " (EmployeeID int, Title VARCHAR (6), FirstName VARCHAR (35)," +
+                " MiddleInital VARCHAR (3), LastName VARCHAR(35), Gender VARCHAR (1), Email (62), DOB DATE," +
+                " DateOfJoining DATE, Salary int )" +
+                " VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             int i = 0;
@@ -110,6 +112,18 @@ public class SQLObject {
             // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
 
+        }
+    }
+
+    // Creates database????
+    public void createDatabase() {
+        String create = "CREATE DATABASE " + databaseName;
+        try (PreparedStatement statement = connection.prepareStatement(create)) {
+            String sql = "CREATE DATABASE STUDENTS";
+            statement.executeUpdate(sql);
+            System.out.println("Database created successfully...");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
