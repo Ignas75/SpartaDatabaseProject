@@ -66,6 +66,10 @@ public class Reader {
             if(!filteredData.add(createEmployee(line))){
                 duplicateData.add(createEmployee(line));
                 duplicateDataCounter++;
+                //TODO ADD LOGGER HERE
+                logger.log(Level.ERROR, "Duplicate Entry Logged", createEmployee(line));
+
+
             }
         }
         else{
@@ -73,6 +77,9 @@ public class Reader {
             if(!line.equals("")){
                 corruptDataLines.add(line);
                 corruptedDataCounter++;
+                //TODO ADD LOGGER HERE
+                logger.log(Level.ERROR, "Corrupted Entry Logged", line);
+
             }
         }
     }
