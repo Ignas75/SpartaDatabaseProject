@@ -115,6 +115,38 @@ public class SQLObject {
         }
     }
 
+    // Untested...
+    public void batchInsert(List<Employee> employees)  {
+        String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
+                "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
+                "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            int i = 0;
+            for (Employee e : employees) {
+                statement.setInt(1, e.getId());
+                statement.setString(2, e.getTitle());
+                statement.setString(3, e.getFirstName());
+                statement.setString(4, e.getMiddleName());
+                statement.setString(5, e.getLastName());
+                statement.setString(6, e.getGender());
+                statement.setString(7, e.getEmail());
+                statement.setString(8, e.getDob());
+                statement.setString(9, e.getJoinDate());
+                statement.setInt(10, e.getSalary());
+
+                statement.addBatch();
+                i++;
+
+                if (i % 1000 == 0 || i == employees.size()) {
+                    statement.executeBatch(); // Execute every 1000 items.
+                }
+            }
+        } catch (SQLException e) {
+            // TODO ADD LOGGER?!?
+            e.printStackTrace();
+        }
+    }
     // Creates database????
     public void createDatabase() {
         String create = "CREATE DATABASE " + databaseName;
