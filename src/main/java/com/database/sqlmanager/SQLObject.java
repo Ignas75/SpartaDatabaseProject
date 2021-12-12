@@ -163,18 +163,27 @@ public class SQLObject extends Thread {
         }
     }
 
-    public void query(String column, String condition)
+    public void selectQuery(String column, String condition)
     {
-        String query = "SELECT * FROM " + tableName + " WHERE " + column + " = " + condition;
+        String query = "SELECT * FROM " + tableName + " WHERE " + column + " = " + "'" + condition +"'";
 
-        try (PreparedStatement statement = connection.prepareStatement(query))
+        try (Statement statement = connection.createStatement())
         {
-            ResultSet resultSet = statement.getResultSet();
-            statement.executeUpdate();
+            System.out.println("Results for query: " + query);
+            ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next())
             {
-                System.out.println(resultSet.getString(1));
-                System.out.println(resultSet.getString(2));
+                System.out.print(resultSet.getString(1));
+                System.out.print(", " + resultSet.getString(2));
+                System.out.print(", " + resultSet.getString(3));
+                System.out.print(", " + resultSet.getString(4));
+                System.out.print(", " + resultSet.getString(5));
+                System.out.print(", " + resultSet.getString(6));
+                System.out.print(", " + resultSet.getString(7));
+                System.out.print(", " + resultSet.getString(8));
+                System.out.print(", " + resultSet.getString(9));
+                System.out.print(", " + resultSet.getString(10));
+                System.out.println();
             }
         } catch (SQLException e) {
             e.printStackTrace();
