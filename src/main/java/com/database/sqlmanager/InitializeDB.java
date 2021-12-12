@@ -20,6 +20,8 @@ public class InitializeDB {
     private static String databaseName;
     private static String tableName;
 
+
+    //
     public static void createDatabase() {
 
         try {
