@@ -60,7 +60,7 @@ public class DatabaseController
         return path.endsWith(".csv") || path.endsWith(".txt");
     }
 
-    public void batchInsert(HashSet<Employee> set, int splits)
+    public void batchInsert(HashSet<Employee> set, int splits) throws InterruptedException
     {
 
         List<HashSet<Employee>> theSets = new ArrayList<HashSet<Employee>>(splits);
@@ -80,6 +80,7 @@ public class DatabaseController
             SQLObject connection = new SQLObject(e);
             connection.establishConnection();
             connection.start();
+            connection.join();
         }
     }
 

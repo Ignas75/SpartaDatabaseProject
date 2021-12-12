@@ -51,7 +51,7 @@ public class SQLObjectTest {
 
     @Test
     @DisplayName("Insert Batch threaded")
-    public void insertBatchThreaded()
+    public void insertBatchThreaded()  throws InterruptedException
     {
         DatabaseController ctrl = new DatabaseController();
         ctrl.parseCSV("src/main/resources/testCSV.csv");
