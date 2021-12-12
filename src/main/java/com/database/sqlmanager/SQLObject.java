@@ -4,6 +4,7 @@ import com.database.cli.Cli;
 import com.database.employee.Employee;
 import org.apache.logging.log4j.Level;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 
-public class SQLObject {
+public class SQLObject extends Thread {
     private Connection connection = null;
     private String url;
     private String userid;
@@ -22,12 +23,12 @@ public class SQLObject {
     private String databaseName;
     private String tableName;
 
-    private HashSet<Employee> batch;
+    private final HashSet<Employee> batch;
 
     public SQLObject(){batch = null;}
 
-    public SQLObject(HashSet<Employee> employees){
-        this.batch = employees;
+    public SQLObject(HashSet<Employee> batch){
+        this.batch = batch;
     }
 
     /* ---------------------------------------------------------------------------------------------------------
@@ -83,7 +84,8 @@ public class SQLObject {
         try {
             if (connection == null) {
                 Properties properties = new Properties();
-                properties.load(new FileReader("connection.properties"));
+                File file = new File("src/main/resources/connection.properties");
+                properties.load(new FileReader(file));
                 url = properties.getProperty("dburl");
                 userid = properties.getProperty("dbuser");
                 password = properties.getProperty("dbpassword");
@@ -126,11 +128,8 @@ public class SQLObject {
 
                 statement.addBatch();
                 i++;
-
-                if (i % 1000 == 0 || i == employees.size()) {
-                    statement.executeBatch(); // Execute every 1000 items.
-                }
             }
+            statement.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
@@ -138,6 +137,36 @@ public class SQLObject {
         }
     }
 
+    public void batchInsert() {
+        String query = "INSERT INTO " + tableName +"(EmployeeID, Title, FirstName," +
+                " MiddleInital, LastName, Gender, Email, DOB," +
+                " DateOfJoining, Salary)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            int i = 0;
+            for (Employee e : this.batch) {
+                statement.setInt(1, e.getId());
+                statement.setString(2, e.getTitle());
+                statement.setString(3, e.getFirstName());
+                statement.setString(4, e.getMiddleName());
+                statement.setString(5, e.getLastName());
+                statement.setString(6, e.getGender());
+                statement.setString(7, e.getEmail());
+                statement.setString(8, e.getDob());
+                statement.setString(9, e.getJoinDate());
+                statement.setInt(10, e.getSalary());
+
+                statement.addBatch();
+                i++;
+            }
+            statement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
+        }
+    }
     // Creates database and adds the "employees" table, this might be better as a private helper method which is called
     // inside the establishConnection() method. Don't forget to establish connection before calling this method!
     public void createDatabase() {
@@ -179,5 +208,10 @@ public class SQLObject {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void run() {
+        batchInsert(batch);
     }
 }

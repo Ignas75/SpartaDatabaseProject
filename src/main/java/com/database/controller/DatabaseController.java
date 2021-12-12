@@ -77,9 +77,9 @@ public class DatabaseController
 
         for(HashSet<Employee> e :theSets)
         {
-            SQLObject connection = new SQLObject();
+            SQLObject connection = new SQLObject(e);
             connection.establishConnection();
-            connection.batchInsert(e);
+            connection.start();
         }
     }
 
