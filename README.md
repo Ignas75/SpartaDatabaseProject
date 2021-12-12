@@ -12,7 +12,7 @@ the entire collection ** and retrieve individual data entries **
   folder. In the properties file edit the database_user and the database_password to your username and password for the 
   MYSQL database as for database_url like the image below if you would like to connect to via a different url then 
   change database_url according to your chosen url but remember to leave the "/" after localhost blank/empty.
-  ![connectionp.png](README/connectionp.png?raw=true)
+  ![connectionp](README/connectionp.png?raw=true)
     
     <b>Fig.1 - connection.properties</b>
 
@@ -22,7 +22,7 @@ the entire collection ** and retrieve individual data entries **
   file that will be used in this session, selecting 1 or 2 will simply output a message saying that the file has been
   selected.
   
-  ![UI1.png](README/UI1.png?raw=true)
+  ![UI1](README/UI1.png?raw=true)
 
   <b>Fig.2 - Main Menu on program start up</b>
 
@@ -31,7 +31,7 @@ the entire collection ** and retrieve individual data entries **
   (it should be noted that currently the program will only accept .CSV files and any other file type will cause an
   execution to be thrown)
 
-  ![UI2.png](README/UI2.png?raw=true)
+  ![UI2](README/UI2.png?raw=true)
 
     <b>Fig.3 - Option 3: File Browser</b>
 
