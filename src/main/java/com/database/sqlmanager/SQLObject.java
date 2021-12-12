@@ -92,7 +92,7 @@ public class SQLObject extends Thread {
                 password = properties.getProperty("dbpassword");
                 databaseName = properties.getProperty("dbname");
                 tableName = properties.getProperty("tablename");
-                connection = DriverManager.getConnection(url, userid, password);
+                connection = DriverManager.getConnection(url+databaseName, userid, password);
             }
         } catch (IOException e) {
             System.err.println("Could not load connection.properties");
@@ -163,48 +163,6 @@ public class SQLObject extends Thread {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
-        }
-    }
-    // Creates database and adds the "employees" table, this might be better as a private helper method which is called
-    // inside the establishConnection() method. Don't forget to establish connection before calling this method!
-    public void createDatabase() {
-        PreparedStatement statement = null;
-        String createDB = "CREATE DATABASE " + databaseName;
-        String dropDB = "DROP DATABASE IF EXISTS " + databaseName;
-        String dropTable = "DROP TABLE IF EXISTS " + tableName;
-        String createTable = "CREATE TABLE " + tableName + "(" +
-                "EmployeeID int," +
-                "Title VARCHAR (6)," +
-                "FirstName VARCHAR (35)," +
-                "MiddleInital VARCHAR (3)," +
-                "LastName VARCHAR(35)," +
-                "Gender VARCHAR (1)," +
-                "Email VARCHAR (62)," +
-                "DOB VARCHAR (10)," +
-                "DateOfJoining VARCHAR (10)," +
-                "Salary int)";
-        try { // Can't try with resources as we change statement with a new connection to a newly created DB
-              // Try with resources also makes the variable final.
-            statement = connection.prepareStatement(createDB);
-            statement.executeUpdate(dropDB);
-            statement.executeUpdate(createDB);
-            System.out.println("Database created successfully...");
-
-            connection = DriverManager.getConnection(url + databaseName, userid, password);
-            statement = connection.prepareStatement(createTable);
-            statement.executeUpdate(dropTable);
-            statement.executeUpdate(createTable);
-            System.out.println("Table created successfully...");
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
