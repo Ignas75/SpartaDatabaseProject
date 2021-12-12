@@ -3,6 +3,7 @@ package com.database.sqlmanager;
 import com.database.cli.Cli;
 import org.apache.logging.log4j.Level;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,7 +28,8 @@ public class InitializeDB {
         try {
             if (connection == null) {
                 Properties properties = new Properties();
-                properties.load(new FileReader("connection.properties"));
+                File prop = new File("src/main/resources/connection.properties");
+                properties.load(new FileReader(prop));
                 url = properties.getProperty("dburl");
                 userid = properties.getProperty("dbuser");
                 password = properties.getProperty("dbpassword");
