@@ -7,10 +7,7 @@ import org.apache.logging.log4j.Level;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -159,6 +156,35 @@ public class SQLObject extends Thread {
             }
             int[] out = statement.executeBatch();
             System.out.println(Arrays.toString(out));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
+        }
+    }
+
+    public void selectQuery(String column, String condition)
+    {
+        String query = "SELECT * FROM " + tableName + " WHERE " + column + " = " + "'" + condition +"'";
+
+        try (Statement statement = connection.createStatement())
+        {
+            System.out.println("Results for query: " + query);
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next())
+            {
+                System.out.print(resultSet.getString(1));
+                System.out.print(", " + resultSet.getString(2));
+                System.out.print(", " + resultSet.getString(3));
+                System.out.print(", " + resultSet.getString(4));
+                System.out.print(", " + resultSet.getString(5));
+                System.out.print(", " + resultSet.getString(6));
+                System.out.print(", " + resultSet.getString(7));
+                System.out.print(", " + resultSet.getString(8));
+                System.out.print(", " + resultSet.getString(9));
+                System.out.print(", " + resultSet.getString(10));
+                System.out.println();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
