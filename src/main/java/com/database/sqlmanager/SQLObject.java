@@ -7,10 +7,7 @@ import org.apache.logging.log4j.Level;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -159,6 +156,26 @@ public class SQLObject extends Thread {
             }
             int[] out = statement.executeBatch();
             System.out.println(Arrays.toString(out));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO ADD LOGGER?!?
+            Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
+        }
+    }
+
+    public void query(String column, String condition)
+    {
+        String query = "SELECT * FROM " + tableName + " WHERE " + column + " = " + condition;
+
+        try (PreparedStatement statement = connection.prepareStatement(query))
+        {
+            ResultSet resultSet = statement.getResultSet();
+            statement.executeUpdate();
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString(1));
+                System.out.println(resultSet.getString(2));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
