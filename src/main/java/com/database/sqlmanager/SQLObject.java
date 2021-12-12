@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -113,7 +114,6 @@ public class SQLObject extends Thread {
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            int i = 0;
             for (Employee e : employees) {
                 statement.setInt(1, e.getId());
                 statement.setString(2, e.getTitle());
@@ -127,7 +127,6 @@ public class SQLObject extends Thread {
                 statement.setInt(10, e.getSalary());
 
                 statement.addBatch();
-                i++;
             }
             statement.executeBatch();
         } catch (SQLException e) {
@@ -144,7 +143,6 @@ public class SQLObject extends Thread {
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            int i = 0;
             for (Employee e : this.batch) {
                 statement.setInt(1, e.getId());
                 statement.setString(2, e.getTitle());
@@ -158,9 +156,9 @@ public class SQLObject extends Thread {
                 statement.setInt(10, e.getSalary());
 
                 statement.addBatch();
-                i++;
             }
-            statement.executeBatch();
+            int[] out = statement.executeBatch();
+            System.out.println(Arrays.toString(out));
         } catch (SQLException e) {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
@@ -213,5 +211,16 @@ public class SQLObject extends Thread {
     @Override
     public void run() {
         batchInsert(batch);
+        closeConnection();
+        System.out.println("Connection closed");
+    }
+
+    public void closeConnection()
+    {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
