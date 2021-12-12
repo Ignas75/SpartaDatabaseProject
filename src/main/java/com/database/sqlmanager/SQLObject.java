@@ -12,12 +12,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
-
 import java.util.Properties;
 
-public class SQLObject implements Runnable {
+public class SQLObject {
     private Connection connection = null;
-    private final String databaseName = "employee_records";
+    private String url;
+    private String userid;
+    private String password;
+    private String databaseName;
+    private String tableName;
+
     private HashSet<Employee> batch;
 
     public SQLObject(){batch = null;}
@@ -26,10 +30,21 @@ public class SQLObject implements Runnable {
         this.batch = employees;
     }
 
+    /* ---------------------------------------------------------------------------------------------------------
+    NOTES FOR ANY DEVS: If the database isn't working properly, you need to set up your connection.properties:
+
+    dburl=jdbc:mysql://localhost:3306/ << Notice how this doesn't have the database name!
+    dbuser=root
+    dbpassword=YOUR_PASSWORD_HERE
+    dbname=employee_records
+    tablename=employees
+
+    ---------------------------------------------------------------------------------------------------------- */
+
     public void CreateStatement() {
         String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
-                "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
-                "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
+                "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (1), " + "LastName VARCHAR(35), " +
+                "Gender VARCHAR (1), " + "Email VARCHAR (62), " + "DOB VARCHAR(10), " + "DateOfJoining VARCHAR(10), " + "Salary int )";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,10 +54,11 @@ public class SQLObject implements Runnable {
     }
 
     public void InsertStatement(Employee employee) {
-        String query = "INSERT INTO " + databaseName + " (EmployeeID int, Title VARCHAR (6), FirstName VARCHAR (35)," +
-                " MiddleInital VARCHAR (3), LastName VARCHAR(35), Gender VARCHAR (1), Email (62), DOB DATE," +
-                " DateOfJoining DATE, Salary int )" +
-                " VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + tableName +"(EmployeeID, Title, FirstName," +
+                " MiddleInital, LastName, Gender, Email, DOB," +
+                " DateOfJoining, Salary)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                //" VALUES (5555, Mr., Leo, H, Hoang, M, asdasd@gmail.com, 12/31/1992, 11/08/2021, 21000)";
         try (PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setInt(1, employee.getId());
@@ -60,7 +76,6 @@ public class SQLObject implements Runnable {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
-
         }
     }
 
@@ -69,9 +84,11 @@ public class SQLObject implements Runnable {
             if (connection == null) {
                 Properties properties = new Properties();
                 properties.load(new FileReader("connection.properties"));
-                String url = properties.getProperty("database_url");
-                String userid = properties.getProperty("database_user");
-                String password = properties.getProperty("database_password");
+                url = properties.getProperty("dburl");
+                userid = properties.getProperty("dbuser");
+                password = properties.getProperty("dbpassword");
+                databaseName = properties.getProperty("dbname");
+                tableName = properties.getProperty("tablename");
                 connection = DriverManager.getConnection(url, userid, password);
             }
         } catch (IOException e) {
@@ -87,14 +104,11 @@ public class SQLObject implements Runnable {
         }
     }
 
-    // Untested...
-    public void batchInsert(HashSet<Employee> employees)  {
-
     public void batchInsert(HashSet<Employee> employees) {
-        String query = "INSERT INTO " + databaseName + " (EmployeeID int, Title VARCHAR (6), FirstName VARCHAR (35)," +
-                " MiddleInital VARCHAR (3), LastName VARCHAR(35), Gender VARCHAR (1), Email (62), DOB DATE," +
-                " DateOfJoining DATE, Salary int )" +
-                " VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + tableName +"(EmployeeID, Title, FirstName," +
+                " MiddleInital, LastName, Gender, Email, DOB," +
+                " DateOfJoining, Salary)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             int i = 0;
@@ -121,58 +135,49 @@ public class SQLObject implements Runnable {
             e.printStackTrace();
             // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
-
         }
     }
 
-    // Untested...
-    public void batchInsert(List<Employee> employees)  {
-        String query = "CREATE TABLE " + databaseName + " (EmployeeID int, Title VARCHAR (6), " +
-                "FirstName VARCHAR (35), " + "MiddleInital VARCHAR (3), " + "LastName VARCHAR(35), " +
-                "Gender VARCHAR (1), " + "Email (62), " + "DOB DATE, " + "DateOfJoining DATE, " + "Salary int )";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            int i = 0;
-            for (Employee e : employees) {
-                statement.setInt(1, e.getId());
-                statement.setString(2, e.getTitle());
-                statement.setString(3, e.getFirstName());
-                statement.setString(4, e.getMiddleName());
-                statement.setString(5, e.getLastName());
-                statement.setString(6, e.getGender());
-                statement.setString(7, e.getEmail());
-                statement.setString(8, e.getDob());
-                statement.setString(9, e.getJoinDate());
-                statement.setInt(10, e.getSalary());
-
-                statement.addBatch();
-                i++;
-
-                if (i % 1000 == 0 || i == employees.size()) {
-                    statement.executeBatch(); // Execute every 1000 items.
-                }
-            }
-        } catch (SQLException e) {
-            // TODO ADD LOGGER?!?
-            e.printStackTrace();
-        }
-    }
-    // Creates database????
+    // Creates database and adds the "employees" table, this might be better as a private helper method which is called
+    // inside the establishConnection() method. Don't forget to establish connection before calling this method!
     public void createDatabase() {
-        String create = "CREATE DATABASE " + databaseName;
-        try (PreparedStatement statement = connection.prepareStatement(create)) {
-            String sql = "CREATE DATABASE STUDENTS";
-            statement.executeUpdate(sql);
+        PreparedStatement statement = null;
+        String createDB = "CREATE DATABASE " + databaseName;
+        String dropDB = "DROP DATABASE IF EXISTS " + databaseName;
+        String dropTable = "DROP TABLE IF EXISTS " + tableName;
+        String createTable = "CREATE TABLE " + tableName + "(" +
+                "EmployeeID int," +
+                "Title VARCHAR (6)," +
+                "FirstName VARCHAR (35)," +
+                "MiddleInital VARCHAR (3)," +
+                "LastName VARCHAR(35)," +
+                "Gender VARCHAR (1)," +
+                "Email VARCHAR (62)," +
+                "DOB VARCHAR (10)," +
+                "DateOfJoining VARCHAR (10)," +
+                "Salary int)";
+        try { // Can't try with resources as we change statement with a new connection to a newly created DB
+              // Try with resources also makes the variable final.
+            statement = connection.prepareStatement(createDB);
+            statement.executeUpdate(dropDB);
+            statement.executeUpdate(createDB);
             System.out.println("Database created successfully...");
-        } catch (SQLException e) {
+
+            connection = DriverManager.getConnection(url + databaseName, userid, password);
+            statement = connection.prepareStatement(createTable);
+            statement.executeUpdate(dropTable);
+            statement.executeUpdate(createTable);
+            System.out.println("Table created successfully...");
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void run() {
-        if(batch != null){
-            batchInsert(batch);
+        finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
