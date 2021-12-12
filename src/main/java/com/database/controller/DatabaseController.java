@@ -83,4 +83,9 @@ public class DatabaseController
         }
     }
 
+    public HashSet<Employee> getDataSet()
+    {
+        return reader.getFilteredData();
+    }
+
 }
