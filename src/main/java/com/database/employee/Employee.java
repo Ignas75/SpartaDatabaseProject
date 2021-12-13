@@ -144,7 +144,7 @@ public class Employee implements Comparable<Employee> {
                 System.out.println("First name or last name is not at least 1 char contains non-letters! First name: " + firstName + " | Last name: " + lastName );
                 return false;
             }
-            else if (!titleLowerCase.equals("mr.") && !titleLowerCase.equals("mrs.") && !titleLowerCase.equals("ms.") && !titleLowerCase.equals("prof") &&
+            else if (!titleLowerCase.equals("mr.") && !titleLowerCase.equals("mrs.") && !titleLowerCase.equals("ms.") && !titleLowerCase.equals("prof.") &&
                     !titleLowerCase.equals("dr.") && !titleLowerCase.equals("drs.") && !titleLowerCase.equals("hon.")) {
                 System.out.println("Title is incorrect! Title: " + title);
                 return false;
