@@ -47,7 +47,6 @@ public class SQLObject extends Thread {
         } catch (SQLException e) {
             e.printStackTrace();
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
-            // TODO ADD LOGGER?!?
         }
     }
 
@@ -72,7 +71,6 @@ public class SQLObject extends Thread {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
         }
     }
@@ -92,12 +90,10 @@ public class SQLObject extends Thread {
             }
         } catch (IOException e) {
             System.err.println("Could not load connection.properties");
-            // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "IOException Thrown", e);
             e.printStackTrace();
         } catch (SQLException e) {
             System.err.println("Could not establish connection, something wrong with: connection properties: dburl / dbuser / dbpassword");
-            // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
             e.printStackTrace();
         }
@@ -127,7 +123,6 @@ public class SQLObject extends Thread {
             statement.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
-            // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
         }
     }
@@ -153,11 +148,8 @@ public class SQLObject extends Thread {
 
                 statement.addBatch();
             }
-            int[] out = statement.executeBatch();
-            System.out.println(Arrays.toString(out));
         } catch (SQLException e) {
             e.printStackTrace();
-            // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
         }
     }
@@ -186,7 +178,6 @@ public class SQLObject extends Thread {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // TODO ADD LOGGER?!?
             Cli.logger.log(Level.ERROR, "SQLException Thrown", e);
         }
     }

@@ -15,7 +15,6 @@ import java.util.Set;
 public class DatabaseController
 {
     private Reader reader;
-    private SQLObject sqlObject;
 
     public void parseCSV(String filePath)
     {
@@ -24,7 +23,6 @@ public class DatabaseController
         if (!isValidFileType(filePath))
         {
             System.out.println("Invalid file extension");
-            //TODO add logging here
             Cli.logger.log(Level.ERROR, "Invalid file extension", filePath);
         }
         else
@@ -39,22 +37,6 @@ public class DatabaseController
         return reader.head(n);
     }
 
-    public void connectToDB()
-    {
-        sqlObject = new SQLObject();
-        sqlObject.establishConnection();
-    }
-
-    public void insertInDatabase(Employee e)
-    {
-        sqlObject.InsertStatement(e);
-    }
-
-    public void createTable()
-    {
-        sqlObject.CreateStatement();
-    }
-
     private boolean isValidFileType(String path)
     {
         return path.endsWith(".csv") || path.endsWith(".txt");
@@ -66,7 +48,7 @@ public class DatabaseController
         List<HashSet<Employee>> theSets = new ArrayList<HashSet<Employee>>(splits);
         for (int i = 0; i < splits; i++)
         {
-            theSets.add(new HashSet<Employee>());
+            theSets.add(new HashSet<>());
         }
 
         int index = 0;

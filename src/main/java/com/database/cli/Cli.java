@@ -2,7 +2,6 @@ package com.database.cli;
 
 import com.database.controller.DatabaseController;
 import com.database.employee.Employee;
-import com.database.reader.Reader;
 import com.database.sqlmanager.InitializeDB;
 import com.database.sqlmanager.SQLObject;
 import org.apache.logging.log4j.Level;
@@ -54,32 +53,28 @@ public class Cli {
             System.err.println("\nError: Please Insert a Valid Input\n");
             logger.log(Level.ERROR, "NumberFormatException Thrown", e);
             menu();
-//            e.printStackTrace();
 
         }
         input.close();
     }
 
     public void selectFile(int selection) throws InterruptedException {
-        int numberOfThreads;
         JFileChooser chooser;
         try {
             switch (selection) {
                 case (1) -> {
-//                chooser = new JFileChooser("src/main/resources/EmployeeRecords.csv");
                     chosenFile = new File("src/main/resources/EmployeeRecords.csv");
                     controller.parseCSV("src/main/resources/EmployeeRecords.csv");
                     System.out.println("Please Insert Number of Threads you like to use");
                     System.out.println("Please note that the minimum number of threads allowed is 3");
-                    calculatetime(numberOfThreads());
+                    startBatchInsert(numberOfThreads());
                     selectQuery();
                 }
                 case (2) -> {
-//                chooser = new JFileChooser("src/main/resources/testCSV.csv");
                     controller.parseCSV("src/main/resources/EmployeeRecordsLarge.csv");
                     System.out.println("Please Insert Number of Threads you like to use");
                     System.out.println("Please note that the minimum number of threads allowed is 3");
-                    calculatetime(numberOfThreads());
+                    startBatchInsert(numberOfThreads());
                     selectQuery();
                 }
                 case (3) -> {
@@ -96,9 +91,8 @@ public class Cli {
                     frame.dispose();
                     System.out.println("Please Insert Number of Threads you like to use");
                     System.out.println("Please note that the minimum number of threads allowed is 3");
-                    calculatetime(numberOfThreads());
+                    startBatchInsert(numberOfThreads());
                     selectQuery();
-
                 }
                 default -> {
                     JOptionPane.showMessageDialog(null, "Error:Invalid Option", "Error", JOptionPane.ERROR_MESSAGE);
@@ -109,15 +103,14 @@ public class Cli {
             System.err.println("\nError: Please Insert a Valid Input\n");
             logger.log(Level.ERROR, "NumberFormatException Thrown", e);
             menu();
-//            e.printStackTrace();
         }
     }
 
-    private void calculatetime(int nThreads) throws InterruptedException {
+    private void startBatchInsert(int nThreads) throws InterruptedException {
         System.out.println("Loading...");
-        Long time = System.nanoTime();
+        long time = System.nanoTime();
         controller.batchInsert(controller.getDataSet(), nThreads);
-        Long endtime = System.nanoTime() - time;
+        long endtime = System.nanoTime() - time;
         endtime = endtime / 1000000;
         System.out.print("Completed in: ");
         System.out.print(Double.toString(endtime).substring(0, Double.toString(endtime).length() - 3));
@@ -132,7 +125,6 @@ public class Cli {
 
     public void selectQuery() throws InterruptedException {
         SQLObject sqlObject = new SQLObject();
-        String column;
         String condition;
         sqlObject.establishConnection();
         System.out.println("\nPlease Select a Column you'd like to query" + "\n" + "'1' for Employee ID" + "\n"
@@ -224,13 +216,10 @@ public class Cli {
             System.err.println("\nError: Please Insert a Valid Input\n");
             logger.log(Level.ERROR, "NumberFormatException Thrown", e);
             menu();
-//            e.printStackTrace();
-
         }
         sqlObject.closeConnection();
         input.close();
     }
-
 
     public int numberOfThreads() {
         int value = 0;
@@ -239,7 +228,6 @@ public class Cli {
 
                 Scanner input = new Scanner(System.in);
                 value = Integer.parseInt(input.nextLine().trim());
-//                System.out.println("Input Received");
             } catch (Exception e) {
                 e.printStackTrace();
             }
