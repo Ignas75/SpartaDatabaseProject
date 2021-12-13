@@ -60,4 +60,3 @@ increase in performance in reading the selected file.
 
     <b>Fig.7 - SELECT Query Rows Output</b>
 ***
-# Known Issues
