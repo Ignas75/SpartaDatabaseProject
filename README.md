@@ -22,45 +22,42 @@ increase in performance in reading the selected file.
   * When running the program you will see a menu printed in console prompting you to make a selection of the type of 
   file that will be used in this session, selecting 1 or 2 will simply output a message saying that the file has been
   selected.
+    ![UI1](README/UI1.PNG?raw=true)
+      
+      <b>Fig.2 - Main Menu on program start up</b>
+
+  * However, selecting 3 will open up a file browser which would enable you to select a file of your own choosing,
+    (it should be noted that currently the program will only accept .CSV files and any other file type will cause an
+    execution to be thrown).
+
+    ![UI2](README/UI2.PNG?raw=true)
+
+      <b>Fig.3 - Option 3: File Browser</b>
   
-  ![UI1](README/UI1.PNG?raw=true)
+  * Once the file has been selected a line will be printed stating the chosen file, and you will be then prompted with 
+   the option to select the number of threads you want to use for the processing of the selected file.
+  
+    ![UI3](README/UI3.PNG?raw=true)
+    
+      <b>Fig.4 - Number of Threads Selection Prompt</b>
+  
+  * From there you will be able to look up individual entries via the Query selection menu which will ask for a selection.   
+  
+    ![UI4](README/UI4.PNG?raw=true)
+      
+      <b>Fig.5 - SELECT Query</b>
+  
+  * In every selection that is made the last input that the program will ask for is what exactly the user would like to
+ search for, as shown in the example below the gender is what is being asked of the user and the user has to type M or F.
+  
+    ![UI5](README/UI5.PNG?raw=true)
+  
+    <b>Fig.6 - SELECT Query Entry Specification</b>
 
-  <b>Fig.2 - Main Menu on program start up</b>
+  * once the selection has been specified then the program will return all the rows that match the specified entry. 
 
+    ![UI6](README/UI6.PNG?raw=true)
 
-* However, selecting 3 will open up a file browser which would enable you to select a file of your own choosing,
-  (it should be noted that currently the program will only accept .CSV files and any other file type will cause an
-  execution to be thrown).
-
-  ![UI2](README/UI2.PNG?raw=true)
-
-    <b>Fig.3 - Option 3: File Browser</b>
-
-
-* Once the file has been selected a line will be printed stating the chosen file, and you will be then prompted with 
-the option to select the number of threads you want to use for the processing of the selected file.
-
-  ![UI3](README/UI3.PNG?raw=true)
-  <b>Fig.4 - Number of Threads Selection Prompt</b>
-
-
-* From there you will be able to look up individual entries via the Query selection menu which will ask for a selection.   
-
-  ![UI4](README/UI4.PNG?raw=true)
-
-  <b>Fig.5 - SELECT Query</b>
-
-* In every selection that is made the last input that the program will ask for is what exactly the user would like to
-search for, as shown in the example below the gender is what is being asked of the user and the user has to type M or F.
-
-  ![UI5](README/UI5.PNG?raw=true)
-
-  <b>Fig.6 - SELECT Query Entry Specification</b>
-
-* once the selection has been specified then the program will return all the rows that match the specified entry. 
-
-  ![UI6](README/UI6.PNG?raw=true)
-
-  <b>Fig.7 - SELECT Query Rows Output</b>
+    <b>Fig.7 - SELECT Query Rows Output</b>
 ***
 # Known Issues
