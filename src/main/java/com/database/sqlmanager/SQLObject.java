@@ -33,11 +33,10 @@ public class SQLObject extends Thread {
     NOTES FOR ANY DEVS: If the database isn't working properly, you need to set up your connection.properties:
 
     dburl=jdbc:mysql://localhost:3306/ << Notice how this doesn't have the database name!
-    dbuser=root
+    dbuser=YOUR_USERNAME_HERE
     dbpassword=YOUR_PASSWORD_HERE
     dbname=employee_records
     tablename=employees
-
     ---------------------------------------------------------------------------------------------------------- */
 
     public void CreateStatement() {

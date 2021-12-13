@@ -19,7 +19,6 @@ public class Cli {
     private DatabaseController controller;
 
 
-
     public Cli() {
         controller = new DatabaseController();
     }
@@ -136,7 +135,7 @@ public class Cli {
         String column;
         String condition;
         sqlObject.establishConnection();
-        System.out.println("Please Select a Column you'd like to query" + "\n" + "'1' for Employee ID" + "\n"
+        System.out.println("\nPlease Select a Column you'd like to query" + "\n" + "'1' for Employee ID" + "\n"
                 + "'2' for Title" + "\n" + "'3' for First Name" + "\n" + "'4' for Middle Initial" + "\n"
                 + "'5' for Last Name" + "\n" + "'6' for Gender" + "\n" + "'7' for Email" + "\n" + "'8' for DOB"
                 + "\n" + "'9' for Date of Joining"
@@ -149,71 +148,71 @@ public class Cli {
                 case (1) -> {
                     System.out.println("\nEmployee ID Selected");
                     System.out.println("\nPlease Insert the Employee ID");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("EmployeeID", condition);
                 }
                 case (2) -> {
                     System.out.println("\nTitle Selected");
                     System.out.println("\nPlease Insert the Title");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("Title", condition);
                 }
                 case (3) -> {
                     System.out.println("\nFirst Names Selected");
                     System.out.println("\nPlease Insert the First Name");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("FirstName", condition);
                 }
                 case (4) -> {
                     System.out.println("\nMiddle Initial Selected");
                     System.out.println("\nPlease Insert the Middle Initial");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
-                    sqlObject.selectQuery("MiddleInitial", condition);
+                    sqlObject.selectQuery("MiddleInitial", condition.toUpperCase());
                 }
                 case (5) -> {
                     System.out.println("\nLast Name Selected");
                     System.out.println("\nPlease Insert the Last Name");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("LastName", condition);
                 }
                 case (6) -> {
                     System.out.println("\nGender Selected");
-                    System.out.println("\nPlease Insert the Gender");
+                    System.out.println("\nPlease Insert the Gender (E.g. M or F) ");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("Gender", condition.toUpperCase());
                 }
                 case (7) -> {
                     System.out.println("\nEmail Selected");
                     System.out.println("\nPlease Insert the Email");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("Email", condition);
                 }
                 case (8) -> {
                     System.out.println("\nDOB Selected");
-                    System.out.println("\nPlease Insert the DOB");
+                    System.out.println("\nPlease Insert the DOB (E.g. MM/DD/YYYY or M/D/YYYY)");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("DOB", condition);
                 }
                 case (9) -> {
                     System.out.println("\nDate of Joining Selected");
-                    System.out.println("\nPlease Insert the Date of Joining");
+                    System.out.println("\nPlease Insert the Date of Joining (E.g. MM/DD/YYYY or M/D/YYYY");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("DateOfJoining", condition);
                 }
                 case (10) -> {
                     System.out.println("\nSalary Selected");
                     System.out.println("\nPlease Insert the Salary");
+                    System.err.println("WARNING:Entry is Case Sensitive");
                     condition = input.nextLine().trim();
-                    ;
                     sqlObject.selectQuery("Salary", condition);
                 }
                 default -> {
