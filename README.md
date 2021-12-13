@@ -21,6 +21,7 @@ increase in performance in reading the selected file.
   * When running the program you will see a menu printed in console prompting you to make a selection of the type of 
   file that will be used in this session, selecting 1 or 2 will simply output a message saying that the file has been
   selected.
+    
     ![UI1](README/UI1.PNG?raw=true)
       
       <b>Fig.2 - Main Menu on program start up</b>
