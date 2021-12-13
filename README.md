@@ -5,7 +5,6 @@ The main collection will be added to a database that's been produced by the prog
 the entire collection and retrieve individual data entries.The program makes user of streams,lambdas and threads to 
 increase in performance in reading the selected file.
 ***
-
 # How to Use
 * ###  connection.properties 
   * Before attempting to run the program it is IMPORTANT to setup the connection.properties file found in the resources 
